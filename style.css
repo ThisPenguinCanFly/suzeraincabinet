@@ -4,12 +4,13 @@ body {
   background: linear-gradient(135deg, #0A0F1F 0%, #131C38 100%);
   color: white;
   min-height: 100vh;
-  touch-action: pan-y; /* prevent some mobile zoom glitches */
-  -webkit-user-select: none; /* disable weird selection */
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-y: auto;   /* Allow vertical scroll */
+  touch-action: pan-y;
+  -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-
 
 #game-container {
   display: flex;
