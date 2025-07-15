@@ -67,33 +67,33 @@ class MainGameScene extends Phaser.Scene {
   }
 
   setupBackground() {
-    this.add.text(598, 30, "Government Cabinet", {
+    this.add.text(400, 30, "Government Cabinet", {
       fontSize: "28px",
       fontFamily: "Arial",
       color: "#2C3E50",
     }).setOrigin(0.5);
 
-    this.add.text(598, 590, "Available Politicians", {
+    /*this.add.text(598, 590, "Available Politicians", {
       fontSize: "18px",
       fontFamily: "Arial",
       color: "#34495E",
-    }).setOrigin(0.5);
+    }).setOrigin(0.5);*/
 
   }
 
   setupCabinetPositions() {
     const positions = [
-      { name: "President", x: 598, y: 130, key: "President" },
-      { name: "Economy", x: 338, y: 150, key: "Economy" },
-      { name: "Vice President", x: 468, y: 150, key: "VP" },
-      { name: "Chief of Staff", x: 728, y: 150, key: "CoS" },
-      { name: "Defence", x: 858, y: 150, key: "Defence" },
-      { name: "Justice", x: 270, y: 320, key: "Justice" },
-      { name: "Foregin Affairs", x: 400, y: 320, key: "Foregin" },
-      { name: "Agriculture", x: 530, y: 320, key: "Agriculture" },
-      { name: "Health", x: 660, y: 320, key: "Health" },
-      { name: "Education", x: 790, y: 320, key: "Education" },
-      { name: "Interior", x: 920, y: 320, key: "Interior" },
+      { name: "President", x: 400, y: 130, key: "President" },
+      { name: "Economy", x: 140, y: 150, key: "Economy" },
+      { name: "Vice President", x: 270, y: 150, key: "VP" },
+      { name: "Chief of Staff", x: 530, y: 150, key: "CoS" },
+      { name: "Defence", x: 660, y: 150, key: "Defence" },
+      { name: "Justice", x: 75, y: 320, key: "Justice" },
+      { name: "Foregin Affairs", x: 205, y: 320, key: "Foregin" },
+      { name: "Agriculture", x: 335, y: 320, key: "Agriculture" },
+      { name: "Health", x: 465, y: 320, key: "Health" },
+      { name: "Education", x: 595, y: 320, key: "Education" },
+      { name: "Interior", x: 725, y: 320, key: "Interior" },
     ];
 
     positions.forEach(pos => {
@@ -145,7 +145,7 @@ class MainGameScene extends Phaser.Scene {
       const alreadyAssigned = this.cabinetPositions.some(pos => pos.politician && pos.politician.name === politician.name);
       if (alreadyAssigned) return;
 
-      const x = 300 + index * 120;
+      const x = 100 + index * 120;
       const y = 480;
       const textureKey = this.textures.exists(politician.image) ? politician.image : "placeholder";
 
@@ -192,13 +192,13 @@ class MainGameScene extends Phaser.Scene {
   }
 
   setupUI() {
-    const leftArrow = this.add.text(220, 480, "<", {
+    const leftArrow = this.add.text(30, 480, "<", {
       fontSize: "32px",
       fontFamily: "Arial",
       color: "#34495E",
     }).setInteractive().setOrigin(0.5);
 
-    const rightArrow = this.add.text(970, 480, ">", {
+    const rightArrow = this.add.text(770, 480, ">", {
       fontSize: "32px",
       fontFamily: "Arial",
       color: "#34495E",
@@ -217,35 +217,15 @@ class MainGameScene extends Phaser.Scene {
       }
     });
 
-    const evalButton = this.add.text(1000, 50, "[ EVALUATE ]", {
+    const evalButton = this.add.text(700, 50, "[ EVALUATE ]", {
       fontSize: "20px",
       backgroundColor: "#2980b9",
       color: "#fff",
       padding: { x: 10, y: 5 }
     }).setOrigin(0.5).setInteractive();
 
-    /*evalButton.on("pointerdown", () => {
-      console.log("pressed");
-
-      const cabinet = this.politicians
-        .filter(p => p.sprite.getData("inCabinet"))
-        .map(p => {
-          const position = p.sprite.getData("cabinetPosition");
-          return {
-            ...p.data,
-            positionKey: position, // Add this if EvaluateScene uses positionKey
-            image: p.sprite.texture.key, // Make sure image is passed
-          };
-        });
-
-      console.log("cabinet to evaluate:", cabinet);
-
-      this.scene.pause();
-      this.scene.setVisible(false); // Pause the main scene
-      this.scene.launch("EvaluateScene", { cabinet }); // Launch EvaluateScene with data
-    });*/
     // Add this somewhere in your scene's create method to create the warning text (initially hidden)
-    this.missingText = this.add.text(1080, 200, '', {
+    this.missingText = this.add.text(690, 20, '', {
       fontSize: '18px',
       fontFamily: 'Arial',
       color: '#e74c3c', // red warning color
@@ -254,8 +234,6 @@ class MainGameScene extends Phaser.Scene {
 
     
     evalButton.on("pointerdown", () => {
-      console.log("pressed");
-
       const cabinet = this.politicians
         .filter(p => p.sprite.getData("inCabinet"))
         .map(p => {
@@ -276,7 +254,7 @@ class MainGameScene extends Phaser.Scene {
       const unfilled = requiredPositions.filter(pos => !filledPositions.includes(pos));
 
       if (unfilled.length > 0) {
-        this.missingText.setText(`Missing positions:\n- ${unfilled.join("\n- ")}`);
+        this.missingText.setText(`Some positions are empty`);
         this.missingText.setVisible(true);
         return;
       }
@@ -290,8 +268,6 @@ class MainGameScene extends Phaser.Scene {
       this.scene.setVisible(false);
       this.scene.launch("EvaluateScene", { cabinet });
     });
-
-
   }
 
   setupInputHandlers() {
@@ -351,19 +327,7 @@ class MainGameScene extends Phaser.Scene {
     cabinetPos.politician = politician;
     if (cabinetPos.effectText) cabinetPos.effectText.destroy();
 
-    //this.showEffectiveness(cabinetPos, politician);
     this.updateTextPositions(sprite, cabinetPos);
-  }
-
-  showEffectiveness(cabinetPos, politician) {
-    const value = politician.stats[cabinetPos.key];
-    const color = value >= 80 ? "#27AE60" : value >= 60 ? "#F39C12" : "#E74C3C";
-
-    cabinetPos.effectText = this.add.text(cabinetPos.x, cabinetPos.y + 40, `${value}%`, {
-      fontSize: "16px",
-      fontFamily: "Arial",
-      color,
-    }).setOrigin(0.5);
   }
 
   updateTextPositions(sprite, cabinetPos) {
@@ -434,7 +398,7 @@ class MainGameScene extends Phaser.Scene {
 const config = {
   scene: [MainGameScene, EvaluateScene],
   type: Phaser.AUTO,
-  width: 1196,
+  width: 800,
   height: 600,
   parent: "phaser-game",
   backgroundColor: "#ECF0F1",

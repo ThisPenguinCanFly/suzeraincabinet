@@ -20,6 +20,8 @@ export default class EvaluateScene extends Phaser.Scene {
     this.totalStats = { popultarity: 0, sordPop: 0, bludPop: 0, soll: 0, military: 0, pfjpOP: 0, usprOP: 0, uspmOP: 0, uspcOP: 0, nfpOP: 0, idOP: 0 };
     this.presidentParty = "Temp";
     this.nOfUSPMinisters = 0;
+    this.selectedSegmentIndex = null;
+
     this.calculateStats();
   
     this.displayCabinetMembers();
@@ -32,7 +34,7 @@ export default class EvaluateScene extends Phaser.Scene {
   }
 
   createTitle() {
-    this.add.text(600, 40, "Your Cabinet Evaluation", {
+    this.add.text(400, 40, "Your Cabinet Evaluation", {
       fontSize: "28px",
       fontFamily: "Arial",
       color: "#1F2F3F",
@@ -41,18 +43,18 @@ export default class EvaluateScene extends Phaser.Scene {
 
   getPositions() {
     return [
-      { name: "President", x: 598, y: 130, key: "President" },
-      { name: "Economy", x: 338, y: 150, key: "Economy" },
-      { name: "Vice President", x: 468, y: 150, key: "VP" },
-      { name: "Chief of Staff", x: 728, y: 150, key: "CoS" },
-      { name: "Defence", x: 858, y: 150, key: "Defence" },
-      { name: "Justice", x: 270, y: 320, key: "Justice" },
-      { name: "Foregin Affairs", x: 400, y: 320, key: "Foregin" },
-      { name: "Agriculture", x: 530, y: 320, key: "Agriculture" },
-      { name: "Health", x: 660, y: 320, key: "Health" },
-      { name: "Education", x: 790, y: 320, key: "Education" },
-      { name: "Interior", x: 920, y: 320, key: "Interior" },
-    ];
+      { name: "President", x: 400, y: 130, key: "President" },
+      { name: "Economy", x: 140, y: 150, key: "Economy" },
+      { name: "Vice President", x: 270, y: 150, key: "VP" },
+      { name: "Chief of Staff", x: 530, y: 150, key: "CoS" },
+      { name: "Defence", x: 660, y: 150, key: "Defence" },
+      { name: "Justice", x: 75, y: 320, key: "Justice" },
+      { name: "Foregin Affairs", x: 205, y: 320, key: "Foregin" },
+      { name: "Agriculture", x: 335, y: 320, key: "Agriculture" },
+      { name: "Health", x: 465, y: 320, key: "Health" },
+      { name: "Education", x: 595, y: 320, key: "Education" },
+      { name: "Interior", x: 725, y: 320, key: "Interior" }
+    ]
   }
 
   displayCabinetMembers() {
@@ -174,7 +176,7 @@ export default class EvaluateScene extends Phaser.Scene {
       this.USPMStatus= "Opposing the Goverment";
     }
 
-    this.add.text(400, 500, `Military: ${this.militaryStatus}`, {
+    this.add.text(200, 500, `Military: ${this.militaryStatus}`, {
       fontSize: "16px",
       fontFamily: "Arial",
       color: "#2C3E50",
@@ -197,7 +199,7 @@ export default class EvaluateScene extends Phaser.Scene {
   }
 
   initDiagramData() {
-    this.centerX = 900;
+    this.centerX = 600;
     this.centerY = 520;
     this.outerRadius = 80;
     this.innerRadius = 20;
@@ -222,7 +224,7 @@ export default class EvaluateScene extends Phaser.Scene {
     const defaultText = `Grand National Assembly\nSupport: ${this.GNASupportSeats}/250`;
     this.defaultInfo = defaultText; // store for reuse
 
-    this.infoText = this.add.text(800, 530, defaultText, {
+    this.infoText = this.add.text(500, 530, defaultText, {
       font: '16px Arial',
       fill: '#000000',
       backgroundColor: '#f0f0f0',
@@ -273,9 +275,12 @@ export default class EvaluateScene extends Phaser.Scene {
         const inAngle = mouseAngle >= seg.startAngle && mouseAngle < seg.endAngle;
         const inRadius = dist >= seg.innerRadius && dist <= seg.outerRadius;
         const isHovered = inAngle && inRadius;
-        const offset = isHovered ? 10 : 0;
+
+        // Use offset 10 if hovered or selected
+        const isSelected = i === this.selectedSegmentIndex;
+        const offset = (isHovered || isSelected) ? 10 : 0;
         const innerR = seg.innerRadius;
-        const outerR = seg.outerRadius + (isHovered ? 10 : 0);
+        const outerR = seg.outerRadius + (isHovered || isSelected ? 10 : 0);
 
         seg.graphics.clear();
         this.drawSegmentWithOffset(seg, this.centerX, this.centerY, offset, outerR, innerR);
@@ -287,10 +292,45 @@ export default class EvaluateScene extends Phaser.Scene {
         }
       });
 
-      if (!anyHovered) {
+      if (!anyHovered && this.selectedSegmentIndex === null) {
         this.infoText.setText(this.defaultInfo);
       }
+    });
 
+    // 👇 Add this for click-to-select
+    this.input.on("pointerdown", pointer => {
+      const angleRaw = Phaser.Math.Angle.Between(this.centerX, this.centerY, pointer.x, pointer.y);
+      const mouseAngle = (angleRaw + Math.PI * 2) % (Math.PI * 2);
+      const dist = Phaser.Math.Distance.Between(this.centerX, this.centerY, pointer.x, pointer.y);
+
+      this.segments.forEach((seg, i) => {
+        const inAngle = mouseAngle >= seg.startAngle && mouseAngle < seg.endAngle;
+        const inRadius = dist >= seg.innerRadius && dist <= seg.outerRadius;
+
+        if (inAngle && inRadius) {
+          // Toggle selection
+          if (this.selectedSegmentIndex === i) {
+            this.selectedSegmentIndex = null;
+            this.infoText.setText(this.defaultInfo);
+          } else {
+            this.selectedSegmentIndex = i;
+            this.infoText.setText(this.descriptions[i]);
+          }
+          this.redrawAllSegments(); // trigger redraw
+        }
+      });
+    });
+  }
+
+  redrawAllSegments() {
+    this.segments.forEach((seg, i) => {
+      const isSelected = i === this.selectedSegmentIndex;
+      const offset = isSelected ? 10 : 0;
+      const outerR = seg.outerRadius + offset;
+      const innerR = seg.innerRadius;
+
+      seg.graphics.clear();
+      this.drawSegmentWithOffset(seg, this.centerX, this.centerY, offset, outerR, innerR);
     });
   }
 
@@ -388,7 +428,7 @@ export default class EvaluateScene extends Phaser.Scene {
   }
 
   createScreenshotButton() {
-    const btn = this.add.text(1000, 50, "[ SAVE IMAGE ]", {
+    const btn = this.add.text(700, 50, "[ SAVE IMAGE ]", {
       fontSize: "20px",
       backgroundColor: "#27ae60",
       color: "#fff",
@@ -397,9 +437,9 @@ export default class EvaluateScene extends Phaser.Scene {
 
     btn.on("pointerdown", () => {
       this.game.renderer.snapshot(fullImage => {
-        const cropX = 220;
+        const cropX = 0;
         const cropY = 80;
-        const cropWidth = 750; // 500 - 100
+        const cropWidth = 800; // 500 - 100
         const cropHeight = 350;
 
         // Create off-screen canvas
@@ -425,7 +465,7 @@ export default class EvaluateScene extends Phaser.Scene {
   }
 
   createBackButton() {
-    const back = this.add.text(196, 50, "← BACK", {
+    const back = this.add.text(100, 50, "← BACK", {
       fontSize: "20px",
       backgroundColor: "#FF6B6B",
       color: "#fff",
