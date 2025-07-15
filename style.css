@@ -1,0 +1,61 @@
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  min-height: 100vh;
+}
+
+#game-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+#phaser-game {
+  margin: 20px auto;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+#info-panel {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  backdrop-filter: blur(10px);
+}
+
+#info-panel h3 {
+  margin-top: 0;
+  color: #ffd700;
+}
+
+#info-panel ul {
+  text-align: left;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#info-panel li {
+  margin: 8px 0;
+  opacity: 0.9;
+}
+
+canvas {
+  display: block;
+}

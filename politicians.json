@@ -1,0 +1,971 @@
+[
+  {
+    "id": 1,
+    "name": "Albin Clavin",
+    "image": "p_albin",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":0.5,
+      "Social_Axis":0.1,
+      "OP-USP-R":1.0,
+      "OP-USP-C":0.3,
+      "OP-PFJP":0.4,
+      "OP-NFP":0.0,
+      "OP-WPB":0.1,
+      "OP-Soll":0.2,
+      "OP-Sords": 0.5,
+      "OP-Bluds": 0.1,
+      "OP-Military":0.1
+    }
+  },
+    {
+    "id": 2,
+    "name": "Anton Ranye",
+    "image": "p_anton",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":0.0,
+      "OP-USP-R":1.0,
+      "OP-USP-C":1.0,
+      "OP-PFJP":0.3,
+      "OP-NFP":0.3,
+      "OP-WPB":0.1,
+      "OP-Soll":0.5,
+      "OP-Sords": 0.8,
+      "OP-Bluds": 0.1,
+      "OP-Military":0.3
+    }
+  },
+    {
+    "id": 3,
+    "name": "Bernard Circas",
+    "image": "p_bernard",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":-1.0,
+      "Social_Axis":0.2,
+      "OP-USP-R":-0.2,
+      "OP-USP-C":-0.8,
+      "OP-PFJP":0.1,
+      "OP-NFP":-1.0,
+      "OP-WPB":0.2,
+      "OP-Soll":-0.8,
+      "OP-Sords": 0.2,
+      "OP-Bluds": 0.2,
+      "OP-Military":-0.1
+    }
+  },
+    {
+    "id": 4,
+    "name": "Phelix Bron",
+    "image": "p_bron",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":-0.1,
+      "Social_Axis":-0.9,
+      "OP-USP-R":-0.5,
+      "OP-USP-C":0.3,
+      "OP-PFJP":-1.0,
+      "OP-NFP":0.2,
+      "OP-WPB":-1.0,
+      "OP-Soll":0.4,
+      "OP-Sords": 0.3,
+      "OP-Bluds": -1.0,
+      "OP-Military":0.3
+    }
+  },
+  {
+    "id": 5,
+    "name": "Ciara Walda",
+    "image": "p_ciara",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":-0.2,
+      "Social_Axis":0.8,
+      "OP-USP-R":0.6,
+      "OP-USP-C":0.1,
+      "OP-PFJP":0.4,
+      "OP-NFP":-0.5,
+      "OP-WPB":0.1,
+      "OP-Soll":-0.1,
+      "OP-Sords": 0.3,
+      "OP-Bluds": 0.1,
+      "OP-Military":0.0
+    }
+  },
+  {
+    "id": 6,
+    "name": "Curtan Lesta",
+    "image": "p_curtan",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":-0.8,
+      "OP-USP-R":0.3,
+      "OP-USP-C":1.0,
+      "OP-PFJP":-0.4,
+      "OP-NFP":0.1,
+      "OP-WPB":0.0,
+      "OP-Soll":0.4,
+      "OP-Sords": 0.6,
+      "OP-Bluds": -0.1,
+      "OP-Military":0.3
+    }
+  },
+  {
+    "id": 7,
+    "name": "Deiveid Wisci",
+    "image": "p_deivid",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":0.3,
+      "Social_Axis":0.3,
+      "OP-USP-R":0.8,
+      "OP-USP-C":0.8,
+      "OP-PFJP":0.5,
+      "OP-NFP":0.2,
+      "OP-WPB":0.2,
+      "OP-Soll":0.2,
+      "OP-Sords": 0.5,
+      "OP-Bluds": 0.1,
+      "OP-Military":0.2
+    }
+  },
+  {
+    "id": 8,
+    "name": "Didier Meye",
+    "image": "p_didier",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":0.0,
+      "OP-USP-R":0.5,
+      "OP-USP-C":0.2,
+      "OP-PFJP":0.1,
+      "OP-NFP":-0.2,
+      "OP-WPB":0.0,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.1,
+      "OP-Bluds": 0.0,
+      "OP-Military":0.1
+    }
+  },
+    {
+    "id": 9,
+    "name": "Edith Agnoc",
+    "image": "p_edith",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.5,
+      "Social_Axis":0.2,
+      "OP-USP-R":0.7,
+      "OP-USP-C":0.5,
+      "OP-PFJP":0.8,
+      "OP-NFP":0.1,
+      "OP-WPB":0.1,
+      "OP-Soll":0.2,
+      "OP-Sords": 0.2,
+      "OP-Bluds": 0.0,
+      "OP-Military":0.1
+    }
+  },
+    {
+    "id": 10,
+    "name": "Evelyn Vectrn",
+    "image": "p_evelyn",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":0.5,
+      "OP-USP-R":0.4,
+      "OP-USP-C":-0.1,
+      "OP-PFJP":0.4,
+      "OP-NFP":-0.1,
+      "OP-WPB":0.1,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.2,
+      "OP-Bluds": 0.1,
+      "OP-Military":-0.1
+    }
+  },
+  {
+    "id": 11,
+    "name": "Ewald Aplhonso",
+    "image": "p_ewald",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":1.0,
+      "Social_Axis":0.4,
+      "OP-USP-R":0.8,
+      "OP-USP-C":-0.4,
+      "OP-PFJP":0.1,
+      "OP-NFP":-0.3,
+      "OP-WPB":-0.1,
+      "OP-Soll":0.0,
+      "OP-Sords": -0.2,
+      "OP-Bluds": -0.2,
+      "OP-Military":0.0
+    }
+  },
+  {
+    "id": 12,
+    "name": "Fetih Ejall",
+    "image": "p_fetih",
+    "party": "WPB",
+    "stats": {
+      "Economic_Axis":-0.7,
+      "Social_Axis":1.0,
+      "OP-USP-R":0.3,
+      "OP-USP-C":-0.3,
+      "OP-PFJP":0.5,
+      "OP-NFP":-0.8,
+      "OP-WPB":1.0,
+      "OP-Soll":-0.2,
+      "OP-Sords": 0.0,
+      "OP-Bluds": 1.0,
+      "OP-Military":-0.1
+    }
+  },
+  {
+    "id": 13,
+    "name": "Frens Ricter",
+    "image": "p_frens",
+    "party": "PFJP",
+    "stats": {
+      "Economic_Axis":0.8,
+      "Social_Axis":0.7,
+      "OP-USP-R":0.4,
+      "OP-USP-C":-0.4,
+      "OP-PFJP":1.0,
+      "OP-NFP":-0.8,
+      "OP-WPB":0.0,
+      "OP-Soll":-0.1,
+      "OP-Sords": 0.3,
+      "OP-Bluds": 0.1,
+      "OP-Military":0.1
+    }
+  },
+    {
+    "id": 13,
+    "name": "Gloria Tory",
+    "image": "p_gloria",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":0.1,
+      "Social_Axis":-0.5,
+      "OP-USP-R":0.4,
+      "OP-USP-C":1.0,
+      "OP-PFJP":-0.2,
+      "OP-NFP":0.3,
+      "OP-WPB":-0.2,
+      "OP-Soll":0.3,
+      "OP-Sords": 0.6,
+      "OP-Bluds": 0.0,
+      "OP-Military":0.2
+    }
+  },
+  {
+    "id": 14,
+    "name": "Gus Manger",
+    "image": "p_gus",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":0.7,
+      "Social_Axis":0.1,
+      "OP-USP-R":0.7,
+      "OP-USP-C":0.5,
+      "OP-PFJP":0.1,
+      "OP-NFP":0.0,
+      "OP-WPB":0.0,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.0,
+      "OP-Bluds": 0.0,
+      "OP-Military":0.0
+    }
+  },
+    {
+    "id": 15,
+    "name": "Herbert Krull",
+    "image": "p_herbert",
+    "party": "NFP",
+    "stats": {
+      "Economic_Axis":0.3,
+      "Social_Axis":-0.5,
+      "OP-USP-R":0.0,
+      "OP-USP-C":0.4,
+      "OP-PFJP":-0.5,
+      "OP-NFP":1.0,
+      "OP-WPB":-0.8,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.1,
+      "OP-Bluds": -0.6,
+      "OP-Military":0.1
+    }
+  },
+  {
+    "id": 16,
+    "name": "Heron Graci",
+    "image": "p_heron",
+    "party": "ID - USP",
+    "stats": {
+      "Economic_Axis":0.2,
+      "Social_Axis":-0.7,
+      "OP-USP-R":0.1,
+      "OP-USP-C":0.8,
+      "OP-PFJP":0.0,
+      "OP-NFP":0.2,
+      "OP-WPB":-0.1,
+      "OP-Soll":0.2,
+      "OP-Sords": 0.1,
+      "OP-Bluds": -0.2,
+      "OP-Military":0.2
+    }
+  },
+  {
+    "id": 17,
+    "name": "Isoef Lancea",
+    "image": "p_iosef",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":0.2,
+      "Social_Axis":-0.5,
+      "OP-USP-R":0.4,
+      "OP-USP-C":0.4,
+      "OP-PFJP":0.4,
+      "OP-NFP":0.4,
+      "OP-WPB":0.0,
+      "OP-Soll":0.2,
+      "OP-Sords": 0.5,
+      "OP-Bluds": 0.0,
+      "OP-Military":1.0
+    }
+  },
+  {
+    "id": 18,
+    "name": "Isabel Edmonds",
+    "image": "p_isabel",
+    "party": "ID ",
+    "stats": {
+      "Economic_Axis":0.2,
+      "Social_Axis":-0.1,
+      "OP-USP-R":0.5,
+      "OP-USP-C":0.4,
+      "OP-PFJP":0.5,
+      "OP-NFP":0.0,
+      "OP-WPB":0.0,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.1,
+      "OP-Bluds": 0.1,
+      "OP-Military":0.0
+    }
+  },
+  {
+    "id": 19,
+    "name": "Ishval Ersen",
+    "image": "p_ishval",
+    "party": "ID - WPB",
+    "stats": {
+      "Economic_Axis":-0.1,
+      "Social_Axis":0.9,
+      "OP-USP-R":0.1,
+      "OP-USP-C":-0.3,
+      "OP-PFJP":0.4,
+      "OP-NFP":-0.6,
+      "OP-WPB":1.0,
+      "OP-Soll":-0.1,
+      "OP-Sords": 0.1,
+      "OP-Bluds": 1.0,
+      "OP-Military":-0.1
+    }
+  },
+  {
+    "id": 20,
+    "name": "Karl Greiser",
+    "image": "p_karl",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.1,
+      "Social_Axis":-0.1,
+      "OP-USP-R":0.4,
+      "OP-USP-C":0.4,
+      "OP-PFJP":0.2,
+      "OP-NFP":0.2,
+      "OP-WPB":0.0,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.0,
+      "OP-Bluds": 0.0,
+      "OP-Military":0.1
+    }
+  },
+  {
+    "id": 21,
+    "name": "Karlog Greiser",
+    "image": "p_karlog",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":-0.1,
+      "Social_Axis":0.1,
+      "OP-USP-R":0.4,
+      "OP-USP-C":0.4,
+      "OP-PFJP":0.2,
+      "OP-NFP":0.2,
+      "OP-WPB":0.0,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.0,
+      "OP-Bluds": 0.1,
+      "OP-Military":0.0
+    }
+  },
+  {
+    "id": 22,
+    "name": "Katarina Horten",
+    "image": "p_katarina",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":-0.6,
+      "Social_Axis":0.8,
+      "OP-USP-R":0.3,
+      "OP-USP-C":-0.3,
+      "OP-PFJP":0.4,
+      "OP-NFP":-0.8,
+      "OP-WPB":0.8,
+      "OP-Soll":-0.2,
+      "OP-Sords": 0.0,
+      "OP-Bluds": 0.6,
+      "OP-Military":-0.1
+    }
+  },
+  {
+    "id": 23,
+    "name": "Alfred Kcirbuk",
+    "image": "p_kcirbuk",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":0.3,
+      "OP-USP-R":0.2,
+      "OP-USP-C":0.1,
+      "OP-PFJP":0.5,
+      "OP-NFP":0.1,
+      "OP-WPB":0.1,
+      "OP-Soll":0.0,
+      "OP-Sords": 1.0,
+      "OP-Bluds": 0.6,
+      "OP-Military":0.0
+    }
+  },
+  {
+    "id": 24,
+    "name": "Kesaro Kibener",
+    "image": "p_kesaro",
+    "party": "NFP",
+    "stats": {
+      "Economic_Axis":0.3,
+      "Social_Axis":-0.7,
+      "OP-USP-R":0.0,
+      "OP-USP-C":0.3,
+      "OP-PFJP":-0.5,
+      "OP-NFP":1.0,
+      "OP-WPB":-1.0,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.5,
+      "OP-Bluds": -0.5,
+      "OP-Military":0.3
+    }
+  },
+  {
+    "id": 25,
+    "name": "Lileas Graf",
+    "image": "p_lileas",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":-0.2,
+      "Social_Axis":-0.6,
+      "OP-USP-R":0.3,
+      "OP-USP-C":1.0,
+      "OP-PFJP":0.0,
+      "OP-NFP":0.1,
+      "OP-WPB":0.0,
+      "OP-Soll":0.3,
+      "OP-Sords": 0.5,
+      "OP-Bluds": 0.0,
+      "OP-Military":0.3
+    }
+  },
+    {
+    "id": 25,
+    "name": "Livia Suno",
+    "image": "p_livia",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":0.1,
+      "OP-USP-R":-0.3,
+      "OP-USP-C":-0.3,
+      "OP-PFJP":-0.3,
+      "OP-NFP":-0.3,
+      "OP-WPB":-0.3,
+      "OP-Soll":-1.0,
+      "OP-Sords": 0.0,
+      "OP-Bluds": 0.0,
+      "OP-Military": -0.1
+    }
+  },
+  {
+    "id": 26,
+    "name": "Lucian Galade",
+    "image": "p_lucian",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":0.1,
+      "Social_Axis":-0.4,
+      "OP-USP-R":0.5,
+      "OP-USP-C":0.5,
+      "OP-PFJP":0.0,
+      "OP-NFP":0.0,
+      "OP-WPB":0.0,
+      "OP-Soll":0.1,
+      "OP-Sords": 0.1,
+      "OP-Bluds": 0.0,
+      "OP-Military":0.3
+    }
+  },
+  {
+    "id": 27,
+    "name": "Manoly Suheil",
+    "image": "p_manoly",
+    "party": "PFJP",
+    "stats": {
+      "Economic_Axis":-0.3,
+      "Social_Axis":0.8,
+      "OP-USP-R":0.3,
+      "OP-USP-C":-0.3,
+      "OP-PFJP":1.0,
+      "OP-NFP":-0.8,
+      "OP-WPB":0.5,
+      "OP-Soll":-0.3,
+      "OP-Sords": 0.3,
+      "OP-Bluds": 0.2,
+      "OP-Military":-0.1
+    }
+  },
+  {
+    "id": 28,
+    "name": "Mansoun Leke",
+    "image": "p_mansoun",
+    "party": "ID - WPB",
+    "stats": {
+      "Economic_Axis":-0.5,
+      "Social_Axis":0.9,
+      "OP-USP-R":0.3,
+      "OP-USP-C":-0.5,
+      "OP-PFJP":0.4,
+      "OP-NFP":-0.8,
+      "OP-WPB":1.0,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.1,
+      "OP-Bluds": 1.0,
+      "OP-Military":-0.1
+    }
+  },
+  {
+    "id": 29,
+    "name": "Marcel Koronti",
+    "image": "p_marcel",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.8,
+      "Social_Axis":0.0,
+      "OP-USP-R":0.2,
+      "OP-USP-C":0.1,
+      "OP-PFJP":-0.1,
+      "OP-NFP":0.0,
+      "OP-WPB":-0.2,
+      "OP-Soll":0.0,
+      "OP-Sords": -0.2,
+      "OP-Bluds": -0.2,
+      "OP-Military":0.0
+    }
+  },
+  {
+    "id": 30,
+    "name": "Mikail Aven",
+    "image": "p_mikail",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.8,
+      "Social_Axis":0.1,
+      "OP-USP-R":0.5,
+      "OP-USP-C":0.5,
+      "OP-PFJP":0.4,
+      "OP-NFP":0.1,
+      "OP-WPB":0.1,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.0,
+      "OP-Bluds": 0.0,
+      "OP-Military":0.0
+    }
+  },
+  {
+    "id": 31,
+    "name": "Monica Rayne",
+    "image": "p_monica",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":0.6,
+      "OP-USP-R":0.5,
+      "OP-USP-C":0.3,
+      "OP-PFJP":0.5,
+      "OP-NFP":-0.1,
+      "OP-WPB":0.1,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.3,
+      "OP-Bluds": 0.1,
+      "OP-Military":0.0
+    }
+  },
+  {
+    "id": 32,
+    "name": "Nia Morgana",
+    "image": "p_nia",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":0.1,
+      "Social_Axis":0.5,
+      "OP-USP-R":1.0,
+      "OP-USP-C":0.6,
+      "OP-PFJP":0.6,
+      "OP-NFP":-0.2,
+      "OP-WPB":0.1,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.1,
+      "OP-Bluds": 0.1,
+      "OP-Military":0.1
+    }
+  },
+  {
+    "id": 33,
+    "name": "Orso Hawker",
+    "image": "p_orso",
+    "party": "ID - USP",
+    "stats": {
+      "Economic_Axis":-0.1,
+      "Social_Axis":-0.8,
+      "OP-USP-R":-0.5,
+      "OP-USP-C":0.8,
+      "OP-PFJP":-0.5,
+      "OP-NFP":0.2,
+      "OP-WPB":-0.5,
+      "OP-Soll":1.0,
+      "OP-Sords": 0.2,
+      "OP-Bluds": -0.5,
+      "OP-Military":0.3
+    }
+  },
+  {
+    "id": 34,
+    "name": "Ovid Grecer",
+    "image": "p_ovid",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":0.0,
+      "OP-USP-R":0.8,
+      "OP-USP-C":0.8,
+      "OP-PFJP":0.8,
+      "OP-NFP":0.5,
+      "OP-WPB":0.8,
+      "OP-Soll":0.2,
+      "OP-Sords": 0.2,
+      "OP-Bluds": 0.2,
+      "OP-Military":0.1
+    }
+  },
+  {
+    "id": 35,
+    "name": "Paskal Beniwoll",
+    "image": "p_paskal",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":-0.2,
+      "Social_Axis":0.2,
+      "OP-USP-R":0.6,
+      "OP-USP-C":0.6,
+      "OP-PFJP":0.2,
+      "OP-NFP":0.1,
+      "OP-WPB":0.1,
+      "OP-Soll":0.1,
+      "OP-Sords": 0.2,
+      "OP-Bluds": 0.2,
+      "OP-Military":0.1
+    }
+  },
+  {
+    "id": 36,
+    "name": "Petr Vectrn",
+    "image": "p_petr",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":0.0,
+      "OP-USP-R":1.0,
+      "OP-USP-C":0.8,
+      "OP-PFJP":0.4,
+      "OP-NFP":0.2,
+      "OP-WPB":0.1,
+      "OP-Soll":0.1,
+      "OP-Sords": 0.5,
+      "OP-Bluds": 0.1,
+      "OP-Military":0.1
+    }
+  },
+  {
+    "id": 37,
+    "name": "Policeman",
+    "image": "p_police",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":0.0,
+      "OP-USP-R":0.0,
+      "OP-USP-C":0.0,
+      "OP-PFJP":0.0,
+      "OP-NFP":0.0,
+      "OP-WPB":-0.1,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.1,
+      "OP-Bluds": -0.1,
+      "OP-Military":0.0
+    }
+  },
+  {
+    "id": 38,
+    "name": "Policeman 2",
+    "image": "p_policeog",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":0.0,
+      "OP-USP-R":0.0,
+      "OP-USP-C":0.0,
+      "OP-PFJP":0.0,
+      "OP-NFP":0.0,
+      "OP-WPB":-0.1,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.1,
+      "OP-Bluds": -0.1,
+      "OP-Military":0.0
+    }
+  },
+  {
+    "id": 39,
+    "name": "Archpriest of Deyr",
+    "image": "p_priest",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":-0.2,
+      "Social_Axis":-0.5,
+      "OP-USP-R":0.0,
+      "OP-USP-C":0.3,
+      "OP-PFJP":-0.1,
+      "OP-NFP":0.0,
+      "OP-WPB":0.1,
+      "OP-Soll":-0.1,
+      "OP-Sords": 0.3,
+      "OP-Bluds": 0.3,
+      "OP-Military":0.0
+    }
+  },
+    {
+    "id": 39,
+    "name": "Principal of Toren Hill",
+    "image": "p_principal",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":-0.1,
+      "Social_Axis":-0.7,
+      "OP-USP-R":-0.3,
+      "OP-USP-C":0.3,
+      "OP-PFJP":-0.3,
+      "OP-NFP":0.1,
+      "OP-WPB":-0.3,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.0,
+      "OP-Bluds": -0.1,
+      "OP-Military":0.0
+    }
+  },
+  {
+    "id": 40,
+    "name": "Remus Holstron",
+    "image": "p_remus",
+    "party": "NFP",
+    "stats": {
+      "Economic_Axis":0.5,
+      "Social_Axis":-1.0,
+      "OP-USP-R":-0.5,
+      "OP-USP-C":0.2,
+      "OP-PFJP":-0.6,
+      "OP-NFP":0.8,
+      "OP-WPB":-1.0,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.1,
+      "OP-Bluds": -1.0,
+      "OP-Military":0.2
+    }
+  },
+  {
+    "id": 41,
+    "name": "Reporter",
+    "image": "p_reporter",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.1,
+      "Social_Axis":0.1,
+      "OP-USP-R":0.0,
+      "OP-USP-C":-0.1,
+      "OP-PFJP":0.0,
+      "OP-NFP":-0.1,
+      "OP-WPB":0.0,
+      "OP-Soll":-0.1,
+      "OP-Sords": 0.1,
+      "OP-Bluds": 0.0,
+      "OP-Military":-0.1
+    }
+  },
+  {
+    "id": 42,
+    "name": "Serge Wolkner",
+    "image": "p_serge",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":0.0,
+      "OP-USP-R":0.0,
+      "OP-USP-C":0.0,
+      "OP-PFJP":0.0,
+      "OP-NFP":0.0,
+      "OP-WPB":0.0,
+      "OP-Soll":0.0,
+      "OP-Sords": 0.2,
+      "OP-Bluds": 0.0,
+      "OP-Military":0.0
+    }
+  },
+  {
+    "id": 43,
+    "name": "Denis Stahler",
+    "image": "p_stahler",
+    "party": "CPS",
+    "stats": {
+      "Economic_Axis":-0.9,
+      "Social_Axis":0.8,
+      "OP-USP-R":0.1,
+      "OP-USP-C":-0.6,
+      "OP-PFJP":0.2,
+      "OP-NFP":-1.0,
+      "OP-WPB":0.1,
+      "OP-Soll":-0.8,
+      "OP-Sords": 0.1,
+      "OP-Bluds": 0.1,
+      "OP-Military":-0.1
+    }
+  },
+  {
+    "id": 44,
+    "name": "Symon Holl",
+    "image": "p_symon",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":0.5,
+      "Social_Axis":0.0,
+      "OP-USP-R":1.0,
+      "OP-USP-C":1.0,
+      "OP-PFJP":0.5,
+      "OP-NFP":0.2,
+      "OP-WPB":0.0,
+      "OP-Soll":0.1,
+      "OP-Sords": 0.1,
+      "OP-Bluds": 0.0,
+      "OP-Military":0.1
+    }
+  },
+  {
+    "id": 45,
+    "name": "Tarquin Soll",
+    "image": "p_tarquin",
+    "party": "USP",
+    "stats": {
+      "Economic_Axis":-0.2,
+      "Social_Axis":-1.0,
+      "OP-USP-R":-0.4,
+      "OP-USP-C":0.8,
+      "OP-PFJP":-0.6,
+      "OP-NFP":0.4,
+      "OP-WPB":-0.8,
+      "OP-Soll":1.0,
+      "OP-Sords": 0.5,
+      "OP-Bluds": -1.0,
+      "OP-Military":1.0
+    }
+  },
+  {
+    "id": 46,
+    "name": "Valken Kruger",
+    "image": "p_valken",
+    "party": "ID - USP",
+    "stats": {
+      "Economic_Axis":-0.2,
+      "Social_Axis":-0.9,
+      "OP-USP-R":0.1,
+      "OP-USP-C":0.8,
+      "OP-PFJP":0.2,
+      "OP-NFP":0.4,
+      "OP-WPB":0.0,
+      "OP-Soll":1.0,
+      "OP-Sords": 0.4,
+      "OP-Bluds": 0.0,
+      "OP-Military":1.0
+    }
+  },
+  {
+    "id": 47,
+    "name": "Waiter",
+    "image": "p_waiter",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":0.0,
+      "Social_Axis":0.0,
+      "OP-USP-R":-0.1,
+      "OP-USP-C":-0.1,
+      "OP-PFJP":-0.1,
+      "OP-NFP":-0.1,
+      "OP-WPB":-0.1,
+      "OP-Soll":-0.1,
+      "OP-Sords": 0.0,
+      "C": 0.0,
+      "OP-Military":-0.1
+    }
+  },
+  {
+    "id": 48,
+    "name": "Walter Tusk",
+    "image": "p_walter",
+    "party": "ID",
+    "stats": {
+      "Economic_Axis":1.0,
+      "Social_Axis":0.1,
+      "OP-USP-R":0.3,
+      "OP-USP-C":0.2,
+      "OP-PFJP":0.0,
+      "OP-NFP":0.0,
+      "OP-WPB":-0.1,
+      "OP-Soll":-0.1,
+      "OP-Sords": 0.0,
+      "OP-Bluds": -0.1,
+      "OP-Military":0.0
+    }
+  }
+]

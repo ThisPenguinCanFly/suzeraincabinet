@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabinet Formation Game</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>Cabinet Formation Game</h1>
+        <p>Drag politicians to assign them to cabinet positions!</p>
+        <div id="phaser-game"></div>
+        <div id="info-panel">
+            <h3>Instructions:</h3>
+            <ul>
+                <li>Drag politicians from the left panel</li>
+                <li>Drop them onto cabinet positions</li>
+                <li>Higher stats = better performance in that role</li>
+                <li>Right-click to remove from position</li>
+            </ul>
+        </div>
+    </div>
+   <script type="module" src="game.js"></script>
+</body>
+</html>
