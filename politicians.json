@@ -96,7 +96,7 @@
   },
   {
     "id": 6,
-    "name": "Curtan Lesta",
+    "name": "Curtan Leste",
     "image": "p_curtan",
     "party": "USP",
     "stats": {
@@ -191,7 +191,7 @@
   },
   {
     "id": 11,
-    "name": "Ewald Aplhonso",
+    "name": "Ewald Alphonso",
     "image": "p_ewald",
     "party": "USP",
     "stats": {

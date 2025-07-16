@@ -1,4 +1,7 @@
 import EvaluateScene from "./evaluateScene.js"
+import { COLORS, COLOR_HEX } from './colors.js';
+import { FONT_FAMILIES } from './fonts.js';
+import { createRoundedButton, createGradientRectangle } from './shared.js';
 
 class MainGameScene extends Phaser.Scene {
   constructor() {
@@ -10,28 +13,22 @@ class MainGameScene extends Phaser.Scene {
     this.cabinetPositions = []
     this.draggedPolitician = null
 
-    // Add responsive properties
     this.isMobile = false
     this.scale = 1
   }
 
   preload() {
-    // Detect mobile device
     this.isMobile = this.sys.game.device.input.touch
 
-    // Load politicians and image list
     this.load.json("politicians", "politicians.json")
     this.load.json("imageList", "pictures.json")
 
-    // Create placeholder textures
-    this.createPlaceholderImages()
+    this.createPlaceholders()
   }
 
   create() {
-    // Calculate scale based on screen size
     this.calculateResponsiveScale()
 
-    // Load images listed in pictures.json
     const images = this.cache.json.get("imageList")
     images.forEach((img) => {
       this.load.image(img, `pictures/${img}.png`)
@@ -43,12 +40,12 @@ class MainGameScene extends Phaser.Scene {
       this.setupBackground()
       this.setupCabinetPositions()
       this.politicianData = politicianData
-      this.showPoliticianPage(0)
       this.setupUI()
+      this.showPoliticianPage(0)
       this.setupInputHandlers()
     })
 
-    this.load.start() // Start loading the dynamic images
+    this.load.start()
   }
 
   calculateResponsiveScale() {
@@ -57,48 +54,50 @@ class MainGameScene extends Phaser.Scene {
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
 
-    // Calculate scale to fit screen while maintaining aspect ratio
     const scaleX = windowWidth / gameWidth
     const scaleY = windowHeight / gameHeight
-    this.scale = Math.min(scaleX, scaleY, 1) // Don't scale up beyond 1
+    this.scale = Math.min(scaleX, scaleY, 1)
 
-    // Adjust for mobile
     if (this.isMobile) {
-      this.scale *= 0.95 // Slightly smaller on mobile for better touch targets
+      this.scale *= 0.95
     }
   }
 
-  createPlaceholderImages() {
-    const colors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7", "#DDA0DD", "#98D8C8", "#F7DC6F"]
-
-    colors.forEach((color, index) => {
-      const graphics = this.add.graphics()
-      graphics.fillStyle(Phaser.Display.Color.HexStringToColor(color).color)
-      graphics.fillRect(0, 0, 80, 100)
-      graphics.generateTexture(`politician_${index}`, 80, 100)
-      graphics.destroy()
-    })
-
+  createPlaceholders() {
     const g = this.add.graphics()
-    g.fillStyle(0x2c3e50)
+    g.fillStyle(COLORS.UIBLACK)
     g.fillRoundedRect(0, 0, 120, 140, 10)
-    g.lineStyle(3, 0x3498db)
+    g.lineStyle(3, COLORS.TEXT2)
     g.strokeRoundedRect(0, 0, 120, 140, 10)
     g.generateTexture("cabinet_slot", 120, 140)
     g.destroy()
   }
 
   setupBackground() {
-    // Adjust font sizes for mobile
-    const titleSize = this.isMobile ? "24px" : "28px"
+    const titleSize = this.isMobile ? "24px" : "28px";
+    const width = this.sys.game.config.width;
+    const height = this.sys.game.config.height;
+
+    const gradientTex = this.textures.createCanvas('bg-gradient', width, height);
+    const ctx = gradientTex.getContext();
+
+    const gradient = ctx.createLinearGradient(0, height, width, 0);
+    gradient.addColorStop(0, COLOR_HEX.UIBLACK);
+    gradient.addColorStop(1, COLOR_HEX.UIBLACKHOVER);
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+    gradientTex.refresh();
+
+    this.add.image(0, 0, 'bg-gradient').setOrigin(0, 0);
 
     this.add
-      .text(400, 30, "Government Cabinet", {
+      .text(width / 2, 30, 'GOVERMENT of \'53', {
         fontSize: titleSize,
-        fontFamily: "Arial",
-        color: "#2C3E50",
+        fontFamily: FONT_FAMILIES.LSBold,
+        color: COLOR_HEX.TEXT,
       })
-      .setOrigin(0.5)
+      .setOrigin(0.5);
   }
 
   setupCabinetPositions() {
@@ -121,14 +120,13 @@ class MainGameScene extends Phaser.Scene {
       slot.setInteractive({ dropZone: true })
       slot.setData("position", pos.key)
 
-      // Adjust text size for mobile
-      const textSize = this.isMobile ? "12px" : "14px"
+      const textSize = "14px";
 
       this.add
         .text(pos.x, pos.y + 80, pos.name, {
           fontSize: textSize,
-          fontFamily: "Arial",
-          color: "#2C3E50",
+          fontFamily: FONT_FAMILIES.Lora,
+          color: COLOR_HEX.TEXT,
         })
         .setOrigin(0.5)
 
@@ -145,7 +143,6 @@ class MainGameScene extends Phaser.Scene {
   }
 
   showPoliticianPage(page) {
-    // Remove old sprites (except those in cabinet)
     if (this.politicians && this.politicians.length) {
       this.politicians.forEach((p) => {
         if (!p.sprite.getData("inCabinet")) {
@@ -155,7 +152,6 @@ class MainGameScene extends Phaser.Scene {
         }
       })
 
-      // Keep only the ones in the cabinet
       this.politicians = this.politicians.filter((p) => p.sprite.getData("inCabinet"))
     } else {
       this.politicians = []
@@ -166,7 +162,6 @@ class MainGameScene extends Phaser.Scene {
     const pageData = this.politicianData.slice(start, end)
 
     pageData.forEach((politician, index) => {
-      // Skip if politician is already assigned to a cabinet
       const alreadyAssigned = this.cabinetPositions.some(
         (pos) => pos.politician && pos.politician.name === politician.name,
       )
@@ -187,15 +182,15 @@ class MainGameScene extends Phaser.Scene {
       sprite.setData("inCabinet", false)
       sprite.setData("page", page)
 
-      // Adjust text sizes for mobile
-      const nameSize = this.isMobile ? "10px" : "12px"
-      const statsSize = this.isMobile ? "9px" : "10px"
+
+      const nameSize = "12px"
+      const statsSize = "10px"
 
       const nameText = this.add
         .text(x, y + 60, politician.name, {
           fontSize: nameSize,
-          fontFamily: "Arial",
-          color: "#2C3E50",
+          fontFamily: FONT_FAMILIES.Lora,
+          color: COLOR_HEX.TEXT,
         })
         .setOrigin(0.5)
 
@@ -220,115 +215,128 @@ class MainGameScene extends Phaser.Scene {
     return this.add
       .text(x, y, str, {
         fontSize: fontSize,
-        fontFamily: "Arial",
-        color: "#7F8C8D",
+        fontFamily: FONT_FAMILIES.Lora,
+        color: COLOR_HEX.TEXT,
       })
       .setOrigin(0.5)
   }
 
   setupUI() {
-    // Adjust arrow sizes for mobile
-    const arrowSize = this.isMobile ? "28px" : "32px"
+    const buttonSize = 20;
+    const arrowSize = 20;
+    const radius = 20; 
+    const padding = 5; 
+    const strokeWidth = 1;
 
-    const leftArrow = this.add
-      .text(30, 480, "<", {
-        fontSize: arrowSize,
-        fontFamily: "Arial",
-        color: "#34495E",
-      })
-      .setInteractive()
-      .setOrigin(0.5)
+    createGradientRectangle(this, 0, 410, 800, 200, COLOR_HEX.UIBLACK, COLOR_HEX.UIBLACKHOVER);
 
-    const rightArrow = this.add
-      .text(770, 480, ">", {
-        fontSize: arrowSize,
-        fontFamily: "Arial",
-        color: "#34495E",
-      })
-      .setInteractive()
-      .setOrigin(0.5)
-
-    leftArrow.on("pointerdown", () => {
+    const leftArrowButton = createRoundedButton(this, 30, 480, "<", {
+      fontSize: arrowSize,
+      fontFamily: FONT_FAMILIES.LSBold,
+      textColor: COLOR_HEX.TEXT,
+      bgColor: COLOR_HEX.UIBLACK,
+      hoverColor: COLOR_HEX.UIBLACKHOVER,
+      radius: radius,
+      padding: padding,
+      strokeColor: COLOR_HEX.TEXT,
+      strokeWidth: strokeWidth,
+    }, () => {
       if (this.politicianPage > 0) {
-        this.showPoliticianPage(this.politicianPage - 1)
+        this.showPoliticianPage(this.politicianPage - 1);
       }
-    })
+    });
 
-    rightArrow.on("pointerdown", () => {
-      const maxPage = Math.floor(this.politicianData.length / this.politiciansPerPage)
-      if (this.politicianPage < maxPage) {
-        this.showPoliticianPage(this.politicianPage + 1)
+    const rightArrowButton = createRoundedButton(this, 770, 480, ">", {
+      fontSize: arrowSize,
+      fontFamily: FONT_FAMILIES.LSBold,
+      textColor: COLOR_HEX.TEXT,
+      bgColor: COLOR_HEX.UIBLACK,
+      hoverColor: COLOR_HEX.UIBLACKHOVER,
+      radius: radius,
+      padding: padding,
+      strokeColor: COLOR_HEX.TEXT,
+      strokeWidth: strokeWidth,
+    }, () => {
+      if (this.politicianPage < Math.floor(this.politicianData.length / this.politiciansPerPage)) {
+        this.showPoliticianPage(this.politicianPage + 1);
       }
-    })
+    });
 
-    // Adjust button size for mobile
-    const buttonSize = this.isMobile ? "18px" : "20px"
-
-    const evalButton = this.add
-      .text(700, 50, "[ EVALUATE ]", {
-        fontSize: buttonSize,
-        backgroundColor: "#2980b9",
-        color: "#fff",
-        padding: { x: 10, y: 5 },
-      })
-      .setOrigin(0.5)
-      .setInteractive()
-
-    // Add warning text (initially hidden)
-    this.missingText = this.add
-      .text(690, 20, "", {
-        fontSize: this.isMobile ? "16px" : "18px",
-        fontFamily: "Arial",
-        color: "#e74c3c",
+    this.missingText = this.add.text(690, 20, "", {
+        fontSize: "18px",
+        fontFamily: FONT_FAMILIES.Lora,
+        color: COLOR_HEX.RED,
         align: "center",
       })
       .setOrigin(0.5)
-      .setVisible(false)
+      .setVisible(false);
 
-    evalButton.on("pointerdown", () => {
+    const evalButton = createRoundedButton(this, 700, 50, "EVALUATE", {
+      fontSize: buttonSize,
+      fontFamily: FONT_FAMILIES.LSBold,
+      textColor: COLOR_HEX.TEXT,
+      bgColor: COLOR_HEX.UIBLACK,
+      hoverColor: COLOR_HEX.UIBLACKHOVER,
+      strokeWidth: 1,
+      strokeColor: COLOR_HEX.TEXT,
+      radius: 20,
+      padding: 5,
+    }, () => {
       const cabinet = this.politicians
         .filter((p) => p.sprite.getData("inCabinet"))
         .map((p) => {
-          const position = p.sprite.getData("cabinetPosition")
+          const position = p.sprite.getData("cabinetPosition");
           return {
             ...p.data,
             positionKey: position,
             image: p.sprite.texture.key,
-          }
-        })
+          };
+        });
 
       const requiredPositions = [
-        "President",
-        "Economy",
-        "VP",
-        "CoS",
-        "Defence",
-        "Justice",
-        "Foregin",
-        "Agriculture",
-        "Health",
-        "Education",
-        "Interior",
-      ]
+        "President", "Economy", "VP", "CoS", "Defence", "Justice",
+        "Foregin", "Agriculture", "Health", "Education", "Interior",
+      ];
 
-      const filledPositions = cabinet.map((member) => member.positionKey)
-      const unfilled = requiredPositions.filter((pos) => !filledPositions.includes(pos))
+      const filledPositions = cabinet.map((member) => member.positionKey);
+      const unfilled = requiredPositions.filter((pos) => !filledPositions.includes(pos));
 
       if (unfilled.length > 0) {
-        this.missingText.setText(`Some positions are empty`)
-        this.missingText.setVisible(true)
-        return
+        this.missingText.setText(`Some positions are empty`);
+        this.missingText.setVisible(true);
+        return;
       }
 
-      // Hide warning if previously shown
-      this.missingText.setVisible(false)
+      this.missingText.setVisible(false);
 
-      console.log("cabinet to evaluate:", cabinet)
+      console.log("cabinet to evaluate:", cabinet);
 
-      this.scene.pause()
-      this.scene.setVisible(false)
-      this.scene.launch("EvaluateScene", { cabinet })
-    })
+      this.scene.pause();
+      this.scene.setVisible(false);
+      this.scene.launch("EvaluateScene", { cabinet });
+    });
+  }
+
+  createCircleButton(x, y, radius, fillColor, strokeColor, strokeWidth) {
+    const graphics = this.add.graphics();
+
+    graphics.fillStyle(fillColor, 1);
+    graphics.fillCircle(x, y, radius);
+
+    if (strokeWidth > 0) {
+      graphics.lineStyle(strokeWidth, strokeColor, 1);
+      graphics.strokeCircle(x, y, radius);
+    }
+
+    graphics.setInteractive(
+      new Phaser.Geom.Circle(x, y, radius),
+      Phaser.Geom.Circle.Contains
+    ).on('pointerover', () => {
+      this.input.setDefaultCursor('pointer');
+    }).on('pointerout', () => {
+      this.input.setDefaultCursor('default');
+    });
+    return graphics;
   }
 
   setupInputHandlers() {
@@ -395,9 +403,9 @@ class MainGameScene extends Phaser.Scene {
     const obj = this.politicians.find((p) => p.sprite === sprite)
     if (obj) {
       obj.nameText.x = cabinetPos.x
-      obj.nameText.y = cabinetPos.y + 20
+      obj.nameText.y = cabinetPos.y + 35
       obj.statsText.x = cabinetPos.x
-      obj.statsText.y = cabinetPos.y + 35
+      obj.statsText.y = cabinetPos.y + 50
     }
   }
 
@@ -425,7 +433,6 @@ class MainGameScene extends Phaser.Scene {
 
     const page = sprite.getData("page")
     if (page !== this.politicianPage) {
-      // Politician doesn't belong to current page — remove them
       obj.sprite.destroy()
       obj.nameText.destroy()
       obj.statsText.destroy()
@@ -434,7 +441,6 @@ class MainGameScene extends Phaser.Scene {
       return
     }
 
-    // Otherwise, reset position
     sprite.x = obj.originalX
     sprite.y = obj.originalY
     obj.nameText.x = obj.originalX
@@ -444,9 +450,7 @@ class MainGameScene extends Phaser.Scene {
   }
 
   saveCabinetAsImage() {
-    // Wait for rendering to complete before taking snapshot
     this.game.renderer.snapshot((image) => {
-      // Open the image in a new tab
       const newWindow = window.open()
       if (newWindow) {
         newWindow.document.write(`<img src="${image.src}" alt="Cabinet Snapshot">`)
@@ -455,16 +459,15 @@ class MainGameScene extends Phaser.Scene {
   }
 }
 
-// Game configuration with enhanced responsive scaling
 const config = {
   scene: [MainGameScene, EvaluateScene],
   type: Phaser.AUTO,
   width: 800,
-  height: 600,
+  height: 550,
+  resolution: window.devicePixelRatio,
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
-    // Enhanced responsive options
     min: {
       width: 320,
       height: 240,
@@ -475,12 +478,8 @@ const config = {
     },
   },
   parent: "phaser-game",
-  backgroundColor: "#ECF0F1",
-  // Mobile optimizations
   render: {
-    antialias: true,
     pixelArt: false,
-    roundPixels: true,
   },
   physics: {
     default: "arcade",

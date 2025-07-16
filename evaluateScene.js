@@ -1,5 +1,6 @@
-import { COLORS } from './colors.js'; // Adjust the path if it's in a subfolder
-
+import { COLORS, COLOR_HEX } from './colors.js';
+import { FONT_FAMILIES } from './fonts.js';
+import { createRoundedButton } from './shared.js';
 
 export default class EvaluateScene extends Phaser.Scene {
   constructor() {
@@ -15,29 +16,28 @@ export default class EvaluateScene extends Phaser.Scene {
 
   create() {
     this.createTitle();
+    this.input.setDefaultCursor('default');
     this.positions = this.getPositions();
-    console.log(this.positions);
     this.totalStats = { popultarity: 0, sordPop: 0, bludPop: 0, soll: 0, military: 0, pfjpOP: 0, usprOP: 0, uspmOP: 0, uspcOP: 0, nfpOP: 0, idOP: 0 };
     this.presidentParty = "Temp";
     this.nOfUSPMinisters = 0;
     this.selectedSegmentIndex = null;
 
     this.calculateStats();
-  
     this.displayCabinetMembers();
     this.displayAverageStats();
     this.createParliamentDiagram(); // 🧩 Add this
     this.createScreenshotButton();
     this.createBackButton();
-
-    console.log(this.cabinet);
   }
 
   createTitle() {
-    this.add.text(400, 40, "Your Cabinet Evaluation", {
+    this.add.image(0, 0, 'bg-gradient').setOrigin(0, 0);
+
+    this.add.text(400, 40, 'GOVERMENT of \'53', {
       fontSize: "28px",
-      fontFamily: "Arial",
-      color: "#1F2F3F",
+      fontFamily: FONT_FAMILIES.LSBold,
+      color: COLOR_HEX.TEXT,
     }).setOrigin(0.5);
   }
 
@@ -65,14 +65,14 @@ export default class EvaluateScene extends Phaser.Scene {
       this.add.image(pos.x, pos.y, member.image).setScale(0.3);
       this.add.text(pos.x, pos.y + 60, member.name, {
         fontSize: "12px",
-        fontFamily: "Arial",
-        color: "#000",
+        fontFamily:FONT_FAMILIES.Lora,
+        color: COLOR_HEX.TEXT,
       }).setOrigin(0.5);
 
       this.add.text(pos.x, pos.y + 80, pos.name, {
         fontSize: "14px",
-        fontFamily: "Arial",
-        color: "#2C3E50",
+        fontFamily: FONT_FAMILIES.Lora,
+        color: COLOR_HEX.TEXT,
       }).setOrigin(0.5);
 
 
@@ -176,17 +176,16 @@ export default class EvaluateScene extends Phaser.Scene {
       this.USPMStatus= "Opposing the Goverment";
     }
 
-    this.add.text(200, 500, `Military: ${this.militaryStatus}`, {
+    this.add.text(200, 480, `Military: ${this.militaryStatus}`, {
       fontSize: "16px",
-      fontFamily: "Arial",
-      color: "#2C3E50",
+      fontFamily: FONT_FAMILIES.Lora,
+      color: COLOR_HEX.TEXT,
       align: "center",
     }).setOrigin(0.5);
   
   
   }
 
-  // 🧩 Parliament Diagram Integration
   createParliamentDiagram() {
     this.initDiagramData();
     this.initDescriptions();
@@ -195,11 +194,10 @@ export default class EvaluateScene extends Phaser.Scene {
     this.drawInitialSegments();
     this.setupDiagramInteraction();
     this.createColorToggleButton();
-
   }
 
   initDiagramData() {
-    this.centerX = 600;
+    this.centerX = 400;
     this.centerY = 520;
     this.outerRadius = 80;
     this.innerRadius = 20;
@@ -222,15 +220,15 @@ export default class EvaluateScene extends Phaser.Scene {
 
   initInfoText() {
     const defaultText = `Grand National Assembly\nSupport: ${this.GNASupportSeats}/250`;
-    this.defaultInfo = defaultText; // store for reuse
+    this.defaultInfo = defaultText;
 
-    this.infoText = this.add.text(500, 530, defaultText, {
-      font: '16px Arial',
-      fill: '#000000',
-      backgroundColor: '#f0f0f0',
+    this.infoText = this.add.text(500, 450, defaultText, {
+      fontSize: '16px',
+      fontFamily: FONT_FAMILIES.Lora,
+      color: COLOR_HEX.TEXT,
       padding: { x: 10, y: 6 },
       wordWrap: { width: 300 }
-    }).setDepth(100).setVisible(true); // 👈 show immediately
+    }).setDepth(100).setVisible(true);
   }
 
   createSegments() {
@@ -364,12 +362,13 @@ export default class EvaluateScene extends Phaser.Scene {
   }
 
   createColorToggleButton() {
-    const circle = this.add.circle(this.centerX, this.centerY, 16, 0x444444)
+    const circle = this.add.circle(this.centerX, this.centerY, 15, COLORS.UIBLACK)
       .setInteractive({ useHandCursor: true })
       .setDepth(101);
 
-    const icon = this.add.text(this.centerX, this.centerY, "🎨", {
-      fontSize: "16px"
+    const icon = this.add.text(this.centerX, this.centerY, "•", {
+      fontSize: "16px",
+      color: COLOR_HEX.TEXT,
     }).setOrigin(0.5).setDepth(102);
 
     circle.on("pointerdown", () => {
@@ -428,31 +427,31 @@ export default class EvaluateScene extends Phaser.Scene {
   }
 
   createScreenshotButton() {
-    const btn = this.add.text(700, 50, "[ SAVE IMAGE ]", {
+    const button = createRoundedButton(this, 700, 50, "SAVE IMAGE ", {
+      fontFamily: FONT_FAMILIES.Lora,
       fontSize: "20px",
-      backgroundColor: "#27ae60",
-      color: "#fff",
-      padding: { x: 10, y: 5 }
-    }).setOrigin(0.5).setInteractive();
-
-    btn.on("pointerdown", () => {
+      textColor: COLOR_HEX.TEXT,
+      bgColor: COLOR_HEX.UIBLACK,
+      hoverColor: COLOR_HEX.UIBLACKHOVER,
+      radius: 20,
+      padding: 5,
+      strokeColor: COLOR_HEX.TEXT,
+      strokeWidth: 1,
+    }, () => {
       this.game.renderer.snapshot(fullImage => {
         const cropX = 0;
         const cropY = 80;
-        const cropWidth = 800; // 500 - 100
+        const cropWidth = 800;
         const cropHeight = 350;
 
-        // Create off-screen canvas
         const offCanvas = document.createElement("canvas");
         offCanvas.width = cropWidth;
         offCanvas.height = cropHeight;
 
         const ctx = offCanvas.getContext("2d");
 
-        // Draw cropped portion from full snapshot
         ctx.drawImage(fullImage, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
 
-        // Convert to downloadable image
         const croppedImageURL = offCanvas.toDataURL("image/png");
 
         const a = document.createElement("a");
@@ -461,23 +460,39 @@ export default class EvaluateScene extends Phaser.Scene {
         a.click();
       });
     });
-
   }
 
   createBackButton() {
-    const back = this.add.text(100, 50, "← BACK", {
+    const backButton = createRoundedButton(this, 100, 50, "BACK", {
+      fontFamily: FONT_FAMILIES.Lora,
       fontSize: "20px",
-      backgroundColor: "#FF6B6B",
-      color: "#fff",
-      padding: { x: 10, y: 5 }
-    }).setOrigin(0.5).setInteractive();
-
-    back.on("pointerdown", () => {
-      this.totalStats = { popultarity: 0, sordPop: 0, bludPop: 0, soll: 0, military: 0, pfjpOP: 0, usprOP: 0, uspmOP: 0, uspcOP: 0, nfpOP: 0, idOP: 0 };
+      textColor: COLOR_HEX.TEXT,
+      bgColor: COLOR_HEX.UIBLACK,
+      hoverColor: COLOR_HEX.UIBLACKHOVER,
+      radius: 20,
+      padding: 5,
+      strokeColor: COLOR_HEX.TEXT,
+      strokeWidth: 1,
+    }, () => {
+      this.totalStats = {
+        popultarity: 0,
+        sordPop: 0,
+        bludPop: 0,
+        soll: 0,
+        military: 0,
+        pfjpOP: 0,
+        usprOP: 0,
+        uspmOP: 0,
+        uspcOP: 0,
+        nfpOP: 0,
+        idOP: 0,
+      };
       this.scene.stop();
       this.scene.setVisible(true, "MainGameScene");
       this.scene.resume("MainGameScene");
     });
+
+    return backButton;
   }
 
   calculateStats(){
