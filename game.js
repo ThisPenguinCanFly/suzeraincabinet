@@ -10,12 +10,12 @@ class MainGameScene extends Phaser.Scene {
     this.cabinetPositions = []
     this.draggedPolitician = null
 
-    this.isMobile = true
+    this.isMobile = false
     this.scale = 1
   }
 
   preload() {
-   //this.isMobile = this.sys.game.device.input.touch
+   this.isMobile = this.sys.game.device.input.touch
     if(this.isMobile){
       this.politicianPage = 0
       this.politiciansPerPage = 3
@@ -502,8 +502,7 @@ class MainGameScene extends Phaser.Scene {
   }
 }
 
-//const isMobile = /Mobi|Android/i.test(navigator.userAgent)
-const isMobile = true
+const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
 let gameWidth = 800;
 let gameHeight = 550;

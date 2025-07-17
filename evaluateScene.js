@@ -194,7 +194,7 @@ export default class EvaluateScene extends Phaser.Scene {
       }).setOrigin(0.5);
     }
     else{
-      this.add.text(900, 190, `Military: ${this.militaryStatus}`, {
+      this.add.text(200, 480, `Military: ${this.militaryStatus}`, {
         fontSize: "16px",
         fontFamily: FONT_FAMILIES.Lora,
         color: COLOR_HEX.TEXT,
