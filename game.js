@@ -10,12 +10,12 @@ class MainGameScene extends Phaser.Scene {
     this.cabinetPositions = []
     this.draggedPolitician = null
 
-    this.isMobile = false
+    this.isMobile = true
     this.scale = 1
   }
 
   preload() {
-   this.isMobile = this.sys.game.device.input.touch
+   //this.isMobile = this.sys.game.device.input.touch
     if(this.isMobile){
       this.politicianPage = 0
       this.politiciansPerPage = 3
@@ -256,7 +256,7 @@ class MainGameScene extends Phaser.Scene {
     if(this.isMobile){
       createGradientRectangle(this, 800, 0, 200, 450, COLOR_HEX.UIBLACK, COLOR_HEX.UIBLACKHOVER);
 
-      const leftArrowButton = createRoundedButton(this, 900, 30, "^", {
+      const leftArrowButton = createRoundedButton(this, 880, 30, "^", {
         fontSize: arrowSize,
         fontFamily: FONT_FAMILIES.LSBold,
         textColor: COLOR_HEX.TEXT,
@@ -272,7 +272,7 @@ class MainGameScene extends Phaser.Scene {
         }
       });
 
-      const rightArrowButton = createRoundedButton(this, 900, 410, "v", {
+      const rightArrowButton = createRoundedButton(this, 920, 30, "v", {
         fontSize: arrowSize,
         fontFamily: FONT_FAMILIES.LSBold,
         textColor: COLOR_HEX.TEXT,
@@ -502,7 +502,8 @@ class MainGameScene extends Phaser.Scene {
   }
 }
 
-const isMobile = /Mobi|Android/i.test(navigator.userAgent)
+//const isMobile = /Mobi|Android/i.test(navigator.userAgent)
+const isMobile = true
 
 let gameWidth = 800;
 let gameHeight = 550;
@@ -520,7 +521,7 @@ const config = {
 
   scale: {
     mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
+    autoCenter: Phaser.Scale.NO_CENTER,
     min: {
       width: 320,
       height: 240,
