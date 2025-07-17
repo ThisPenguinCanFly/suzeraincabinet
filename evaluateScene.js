@@ -1,6 +1,6 @@
 import { COLORS, COLOR_HEX } from './colors.js';
 import { FONT_FAMILIES } from './fonts.js';
-import { createRoundedButton } from './shared.js';
+import { createRoundedButton, createGradientRectangle } from './shared.js';
 
 export default class EvaluateScene extends Phaser.Scene {
   constructor() {
@@ -9,10 +9,13 @@ export default class EvaluateScene extends Phaser.Scene {
 
   init(data) {
     this.cabinet = data.cabinet;
-    this.colorPalette = []
+    this.colorPalette = [];
+    this.isMobile = false;
   }
 
-  preload() {}
+  preload() {
+    this.isMobile = this.sys.game.device.input.touch
+  }
 
   create() {
     this.createTitle();
@@ -24,9 +27,15 @@ export default class EvaluateScene extends Phaser.Scene {
     this.selectedSegmentIndex = null;
 
     this.calculateStats();
+    this.drawUI();
     this.displayCabinetMembers();
     this.displayAverageStats();
     this.createParliamentDiagram(); // 🧩 Add this
+
+  }
+
+  drawUI(){
+    createGradientRectangle(this, 800, 0, 200, 450, COLOR_HEX.UIBLACK, COLOR_HEX.UIBLACKHOVER);
     this.createScreenshotButton();
     this.createBackButton();
   }
@@ -34,7 +43,7 @@ export default class EvaluateScene extends Phaser.Scene {
   createTitle() {
     this.add.image(0, 0, 'bg-gradient').setOrigin(0, 0);
 
-    this.add.text(400, 40, 'GOVERMENT of \'53', {
+    this.add.text(400, 30, 'GOVERMENT of \'53', {
       fontSize: "28px",
       fontFamily: FONT_FAMILIES.LSBold,
       color: COLOR_HEX.TEXT,
@@ -176,14 +185,29 @@ export default class EvaluateScene extends Phaser.Scene {
       this.USPMStatus= "Opposing the Goverment";
     }
 
-    this.add.text(200, 480, `Military: ${this.militaryStatus}`, {
-      fontSize: "16px",
-      fontFamily: FONT_FAMILIES.Lora,
+    if(this.isMobile){
+        this.add.text(900, 190, `Military:\n${this.militaryStatus}`, {
+        fontSize: "16px",
+        fontFamily: FONT_FAMILIES.Lora,
+        color: COLOR_HEX.TEXT,
+        align: "center",
+      }).setOrigin(0.5);
+    }
+    else{
+      this.add.text(900, 190, `Military: ${this.militaryStatus}`, {
+        fontSize: "16px",
+        fontFamily: FONT_FAMILIES.Lora,
+        color: COLOR_HEX.TEXT,
+        align: "center",
+      }).setOrigin(0.5);
+    }
+  
+    this.add.text(680, 90, `thispenguincanfly.github.io/suzeraincabinet`, {
+      fontSize: "10px",
+      fontFamily: FONT_FAMILIES.LoraItalic,
       color: COLOR_HEX.TEXT,
       align: "center",
     }).setOrigin(0.5);
-  
-  
   }
 
   createParliamentDiagram() {
@@ -199,6 +223,12 @@ export default class EvaluateScene extends Phaser.Scene {
   initDiagramData() {
     this.centerX = 400;
     this.centerY = 520;
+    if(this.isMobile){
+      this.centerX = 900;
+      this.centerY = 100;
+    }
+
+
     this.outerRadius = 80;
     this.innerRadius = 20;
     this.percentages = [4, 28, 16, 20, 16, 16];
@@ -208,27 +238,52 @@ export default class EvaluateScene extends Phaser.Scene {
   }
 
   initDescriptions() {
-    this.descriptions = [
-      `ID: 10\nStatus: ${this.IDStatus}`,
-      `PFJP: 70\nStatus: ${this.PFJPStatus}`,
-      `USP Reformers: 40\nStatus: ${this.USPRStatus}`,
-      `USP Moderates: 50\nStatus: ${this.USPMStatus}`,
-      `USP Conservatives: 40\nStatus: ${this.USPCStatus}`,
-      `NFP: 40\nStatus: ${this.NFPStatus}`
-    ];
+    if(this.isMobile){
+      this.descriptions = [
+        `ID: 10\n${this.IDStatus}`,
+        `PFJP: 70\n${this.PFJPStatus}`,
+        `USP Reformers: 40\n${this.USPRStatus}`,
+        `USP Moderates: 50\n${this.USPMStatus}`,
+        `USP Conservatives: 40\n${this.USPCStatus}`,
+        `NFP: 40\n${this.NFPStatus}`
+      ];
+    }
+    else{
+      this.descriptions = [
+        `ID: 10\nStatus: ${this.IDStatus}`,
+        `PFJP: 70\nStatus: ${this.PFJPStatus}`,
+        `USP Reformers: 40\nStatus: ${this.USPRStatus}`,
+        `USP Moderates: 50\nStatus: ${this.USPMStatus}`,
+        `USP Conservatives: 40\nStatus: ${this.USPCStatus}`,
+        `NFP: 40\nStatus: ${this.NFPStatus}`
+      ];
+    }
   }
 
   initInfoText() {
-    const defaultText = `Grand National Assembly\nSupport: ${this.GNASupportSeats}/250`;
-    this.defaultInfo = defaultText;
 
-    this.infoText = this.add.text(500, 450, defaultText, {
-      fontSize: '16px',
-      fontFamily: FONT_FAMILIES.Lora,
-      color: COLOR_HEX.TEXT,
-      padding: { x: 10, y: 6 },
-      wordWrap: { width: 300 }
-    }).setDepth(100).setVisible(true);
+    this.defaultText = "";
+
+    if(this.isMobile){
+      this.defaultText = `Grand National Assembly\n${this.GNASupportSeats}/250`;
+      this.infoText = this.add.text(790, 110, this.defaultText, {
+        fontSize: '16px',
+        fontFamily: FONT_FAMILIES.Lora,
+        color: COLOR_HEX.TEXT,
+        padding: { x: 10, y: 6 },
+        wordWrap: { width: 300 }
+      }).setDepth(100).setVisible(true);
+    }
+    else{
+      this.defaultText = `Grand National Assembly\nSupport: ${this.GNASupportSeats}/250`;
+      this.infoText = this.add.text(500, 450, this.defaultText, {
+        fontSize: '16px',
+        fontFamily: FONT_FAMILIES.Lora,
+        color: COLOR_HEX.TEXT,
+        padding: { x: 10, y: 6 },
+        wordWrap: { width: 300 }
+      }).setDepth(100).setVisible(true);
+    }
   }
 
   createSegments() {
@@ -274,7 +329,6 @@ export default class EvaluateScene extends Phaser.Scene {
         const inRadius = dist >= seg.innerRadius && dist <= seg.outerRadius;
         const isHovered = inAngle && inRadius;
 
-        // Use offset 10 if hovered or selected
         const isSelected = i === this.selectedSegmentIndex;
         const offset = (isHovered || isSelected) ? 10 : 0;
         const innerR = seg.innerRadius;
@@ -291,7 +345,7 @@ export default class EvaluateScene extends Phaser.Scene {
       });
 
       if (!anyHovered && this.selectedSegmentIndex === null) {
-        this.infoText.setText(this.defaultInfo);
+        this.infoText.setText(this.defaultText);
       }
     });
 
@@ -309,7 +363,7 @@ export default class EvaluateScene extends Phaser.Scene {
           // Toggle selection
           if (this.selectedSegmentIndex === i) {
             this.selectedSegmentIndex = null;
-            this.infoText.setText(this.defaultInfo);
+            this.infoText.setText(this.defaultText);
           } else {
             this.selectedSegmentIndex = i;
             this.infoText.setText(this.descriptions[i]);
@@ -411,11 +465,9 @@ export default class EvaluateScene extends Phaser.Scene {
     statuses.forEach((status, i) => {
       this.colorSupport[i] = this.getColorForStatus(status);
     });
-    console.log(this.colorSupport)
   }
 
   getColorForStatus(status) {
-    console.log(status);
     switch (status) {
       case "Supporting the Goverment":
         return COLORS.SUPPORT;
@@ -427,7 +479,7 @@ export default class EvaluateScene extends Phaser.Scene {
   }
 
   createScreenshotButton() {
-    const button = createRoundedButton(this, 700, 50, "SAVE IMAGE ", {
+    const button = createRoundedButton(this, 725, 25, "SAVE IMAGE ", {
       fontFamily: FONT_FAMILIES.Lora,
       fontSize: "20px",
       textColor: COLOR_HEX.TEXT,
@@ -463,7 +515,7 @@ export default class EvaluateScene extends Phaser.Scene {
   }
 
   createBackButton() {
-    const backButton = createRoundedButton(this, 100, 50, "BACK", {
+    const backButton = createRoundedButton(this, 38, 25, "BACK", {
       fontFamily: FONT_FAMILIES.Lora,
       fontSize: "20px",
       textColor: COLOR_HEX.TEXT,

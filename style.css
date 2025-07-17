@@ -128,7 +128,7 @@ canvas {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #0a0f1f;
+    background: linear-gradient(135deg, #150D10 0%, #140D14 100%);
   }
 
   #game-container {

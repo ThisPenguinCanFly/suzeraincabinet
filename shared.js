@@ -45,7 +45,6 @@ export function createRoundedButton(scene, x, y, label, options = {}, onClick) {
     }
   }
 
-  // Initial draw
   drawBackground(fill);
 
   const button = scene.add.container(x, y, [bg, text])

@@ -7,9 +7,6 @@ class MainGameScene extends Phaser.Scene {
   constructor() {
     super({ key: "MainGameScene" })
     this.politicianData = []
-    this.politicianPage = 0
-    this.politiciansPerPage = 6
-
     this.cabinetPositions = []
     this.draggedPolitician = null
 
@@ -18,8 +15,15 @@ class MainGameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.isMobile = this.sys.game.device.input.touch
-
+   this.isMobile = this.sys.game.device.input.touch
+    if(this.isMobile){
+      this.politicianPage = 0
+      this.politiciansPerPage = 3
+    }
+    else{
+      this.politicianPage = 0
+      this.politiciansPerPage = 6
+    }
     this.load.json("politicians", "politicians.json")
     this.load.json("imageList", "pictures.json")
 
@@ -74,7 +78,7 @@ class MainGameScene extends Phaser.Scene {
   }
 
   setupBackground() {
-    const titleSize = this.isMobile ? "24px" : "28px";
+    const titleSize ="28px";
     const width = this.sys.game.config.width;
     const height = this.sys.game.config.height;
 
@@ -92,7 +96,7 @@ class MainGameScene extends Phaser.Scene {
     this.add.image(0, 0, 'bg-gradient').setOrigin(0, 0);
 
     this.add
-      .text(width / 2, 30, 'GOVERMENT of \'53', {
+      .text(400, 30, 'GOVERMENT of \'53', {
         fontSize: titleSize,
         fontFamily: FONT_FAMILIES.LSBold,
         color: COLOR_HEX.TEXT,
@@ -148,7 +152,7 @@ class MainGameScene extends Phaser.Scene {
         if (!p.sprite.getData("inCabinet")) {
           p.sprite.destroy()
           p.nameText.destroy()
-          p.statsText.destroy()
+          if(!this.isMobile) p.statsText.destroy();
         }
       })
 
@@ -166,9 +170,18 @@ class MainGameScene extends Phaser.Scene {
         (pos) => pos.politician && pos.politician.name === politician.name,
       )
       if (alreadyAssigned) return
+      
+      let x = 0; 
+      let y = 0;
 
-      const x = 100 + index * 120
-      const y = 480
+      if(this.isMobile){
+        x = 900;
+        y = 100 + index * 110;
+      }
+      else{
+        x = 100 + index * 120;
+        y = 460;
+      }
       const textureKey = this.textures.exists(politician.image) ? politician.image : "placeholder"
 
       const sprite = this.add.image(x, y, textureKey)
@@ -187,16 +200,17 @@ class MainGameScene extends Phaser.Scene {
       const statsSize = "10px"
 
       const nameText = this.add
-        .text(x, y + 60, politician.name, {
+        .text(x, y + 50, politician.name, {
           fontSize: nameSize,
           fontFamily: FONT_FAMILIES.Lora,
           color: COLOR_HEX.TEXT,
         })
         .setOrigin(0.5)
+      
+      if(!this.isMobile){
+        const statsText = this.createStatsText(politician, x, y + 65, statsSize);
 
-      const statsText = this.createStatsText(politician, x, y + 75, statsSize)
-
-      this.politicians.push({
+        this.politicians.push({
         sprite,
         data: politician,
         nameText,
@@ -204,6 +218,17 @@ class MainGameScene extends Phaser.Scene {
         originalX: x,
         originalY: y,
       })
+      } 
+      else{
+        this.politicians.push({
+        sprite,
+        data: politician,
+        nameText,
+        originalX: x,
+        originalY: y,
+      })
+      }
+
     })
 
     this.politicianPage = page
@@ -228,52 +253,89 @@ class MainGameScene extends Phaser.Scene {
     const padding = 5; 
     const strokeWidth = 1;
 
-    createGradientRectangle(this, 0, 410, 800, 200, COLOR_HEX.UIBLACK, COLOR_HEX.UIBLACKHOVER);
+    if(this.isMobile){
+      createGradientRectangle(this, 800, 0, 200, 450, COLOR_HEX.UIBLACK, COLOR_HEX.UIBLACKHOVER);
 
-    const leftArrowButton = createRoundedButton(this, 30, 480, "<", {
-      fontSize: arrowSize,
-      fontFamily: FONT_FAMILIES.LSBold,
-      textColor: COLOR_HEX.TEXT,
-      bgColor: COLOR_HEX.UIBLACK,
-      hoverColor: COLOR_HEX.UIBLACKHOVER,
-      radius: radius,
-      padding: padding,
-      strokeColor: COLOR_HEX.TEXT,
-      strokeWidth: strokeWidth,
-    }, () => {
-      if (this.politicianPage > 0) {
-        this.showPoliticianPage(this.politicianPage - 1);
-      }
-    });
+      const leftArrowButton = createRoundedButton(this, 900, 30, "^", {
+        fontSize: arrowSize,
+        fontFamily: FONT_FAMILIES.LSBold,
+        textColor: COLOR_HEX.TEXT,
+        bgColor: COLOR_HEX.UIBLACK,
+        hoverColor: COLOR_HEX.UIBLACKHOVER,
+        radius: radius,
+        padding: padding,
+        strokeColor: COLOR_HEX.TEXT,
+        strokeWidth: strokeWidth,
+      }, () => {
+        if (this.politicianPage > 0) {
+          this.showPoliticianPage(this.politicianPage - 1);
+        }
+      });
 
-    const rightArrowButton = createRoundedButton(this, 770, 480, ">", {
-      fontSize: arrowSize,
-      fontFamily: FONT_FAMILIES.LSBold,
-      textColor: COLOR_HEX.TEXT,
-      bgColor: COLOR_HEX.UIBLACK,
-      hoverColor: COLOR_HEX.UIBLACKHOVER,
-      radius: radius,
-      padding: padding,
-      strokeColor: COLOR_HEX.TEXT,
-      strokeWidth: strokeWidth,
-    }, () => {
-      if (this.politicianPage < Math.floor(this.politicianData.length / this.politiciansPerPage)) {
-        this.showPoliticianPage(this.politicianPage + 1);
-      }
-    });
+      const rightArrowButton = createRoundedButton(this, 900, 410, "v", {
+        fontSize: arrowSize,
+        fontFamily: FONT_FAMILIES.LSBold,
+        textColor: COLOR_HEX.TEXT,
+        bgColor: COLOR_HEX.UIBLACK,
+        hoverColor: COLOR_HEX.UIBLACKHOVER,
+        radius: radius,
+        padding: padding,
+        strokeColor: COLOR_HEX.TEXT,
+        strokeWidth: strokeWidth,
+      }, () => {
+        if (this.politicianPage < Math.floor(this.politicianData.length / this.politiciansPerPage)) {
+          this.showPoliticianPage(this.politicianPage + 1);
+        }
+      });
+    }
+    else{
+      createGradientRectangle(this, 0, 410, 800, 200, COLOR_HEX.UIBLACK, COLOR_HEX.UIBLACKHOVER);
 
-    this.missingText = this.add.text(690, 20, "", {
+      const leftArrowButton = createRoundedButton(this, 30, 460, "<", {
+        fontSize: arrowSize,
+        fontFamily: FONT_FAMILIES.LSBold,
+        textColor: COLOR_HEX.TEXT,
+        bgColor: COLOR_HEX.UIBLACK,
+        hoverColor: COLOR_HEX.UIBLACKHOVER,
+        radius: radius,
+        padding: padding,
+        strokeColor: COLOR_HEX.TEXT,
+        strokeWidth: strokeWidth,
+      }, () => {
+        if (this.politicianPage > 0) {
+          this.showPoliticianPage(this.politicianPage - 1);
+        }
+      });
+
+      const rightArrowButton = createRoundedButton(this, 770, 460, ">", {
+        fontSize: arrowSize,
+        fontFamily: FONT_FAMILIES.LSBold,
+        textColor: COLOR_HEX.TEXT,
+        bgColor: COLOR_HEX.UIBLACK,
+        hoverColor: COLOR_HEX.UIBLACKHOVER,
+        radius: radius,
+        padding: padding,
+        strokeColor: COLOR_HEX.TEXT,
+        strokeWidth: strokeWidth,
+      }, () => {
+        if (this.politicianPage < Math.floor(this.politicianData.length / this.politiciansPerPage)) {
+          this.showPoliticianPage(this.politicianPage + 1);
+        }
+      });
+    }
+
+    this.missingText = this.add.text(680, 60, "", {
         fontSize: "18px",
-        fontFamily: FONT_FAMILIES.Lora,
+        fontFamily: FONT_FAMILIES.LSBold,
         color: COLOR_HEX.RED,
         align: "center",
       })
       .setOrigin(0.5)
       .setVisible(false);
 
-    const evalButton = createRoundedButton(this, 700, 50, "EVALUATE", {
+    const evalButton = createRoundedButton(this, 735, 25, "EVALUATE", {
       fontSize: buttonSize,
-      fontFamily: FONT_FAMILIES.LSBold,
+      fontFamily: FONT_FAMILIES.Lora,
       textColor: COLOR_HEX.TEXT,
       bgColor: COLOR_HEX.UIBLACK,
       hoverColor: COLOR_HEX.UIBLACKHOVER,
@@ -309,34 +371,10 @@ class MainGameScene extends Phaser.Scene {
 
       this.missingText.setVisible(false);
 
-      console.log("cabinet to evaluate:", cabinet);
-
       this.scene.pause();
       this.scene.setVisible(false);
       this.scene.launch("EvaluateScene", { cabinet });
     });
-  }
-
-  createCircleButton(x, y, radius, fillColor, strokeColor, strokeWidth) {
-    const graphics = this.add.graphics();
-
-    graphics.fillStyle(fillColor, 1);
-    graphics.fillCircle(x, y, radius);
-
-    if (strokeWidth > 0) {
-      graphics.lineStyle(strokeWidth, strokeColor, 1);
-      graphics.strokeCircle(x, y, radius);
-    }
-
-    graphics.setInteractive(
-      new Phaser.Geom.Circle(x, y, radius),
-      Phaser.Geom.Circle.Contains
-    ).on('pointerover', () => {
-      this.input.setDefaultCursor('pointer');
-    }).on('pointerout', () => {
-      this.input.setDefaultCursor('default');
-    });
-    return graphics;
   }
 
   setupInputHandlers() {
@@ -402,10 +440,12 @@ class MainGameScene extends Phaser.Scene {
   updateTextPositions(sprite, cabinetPos) {
     const obj = this.politicians.find((p) => p.sprite === sprite)
     if (obj) {
+      if(!this.isMobile){
+        obj.statsText.x = cabinetPos.x
+        obj.statsText.y = cabinetPos.y + 50
+      }
       obj.nameText.x = cabinetPos.x
       obj.nameText.y = cabinetPos.y + 35
-      obj.statsText.x = cabinetPos.x
-      obj.statsText.y = cabinetPos.y + 50
     }
   }
 
@@ -445,8 +485,11 @@ class MainGameScene extends Phaser.Scene {
     sprite.y = obj.originalY
     obj.nameText.x = obj.originalX
     obj.nameText.y = obj.originalY + 60
-    obj.statsText.x = obj.originalX
-    obj.statsText.y = obj.originalY + 75
+
+    if(!this.isMobile){
+      obj.statsText.x = obj.nameText.x
+      obj.statsText.y = obj.nameText.y + 75
+    }
   }
 
   saveCabinetAsImage() {
@@ -459,12 +502,22 @@ class MainGameScene extends Phaser.Scene {
   }
 }
 
+const isMobile = /Mobi|Android/i.test(navigator.userAgent)
+
+let gameWidth = 800;
+let gameHeight = 550;
+
+if(isMobile){
+  gameWidth = 1000;
+  gameHeight = 450;
+}
+
 const config = {
-  scene: [MainGameScene, EvaluateScene],
   type: Phaser.AUTO,
-  width: 800,
-  height: 550,
+  width: gameWidth,
+  height: gameHeight,
   resolution: window.devicePixelRatio,
+
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -477,10 +530,14 @@ const config = {
       height: 1080,
     },
   },
+
+  scene: [MainGameScene, EvaluateScene],
+
   parent: "phaser-game",
   render: {
     pixelArt: false,
   },
+
   physics: {
     default: "arcade",
     arcade: {
@@ -488,5 +545,6 @@ const config = {
     },
   },
 }
+
 
 new Phaser.Game(config)
