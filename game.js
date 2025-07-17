@@ -96,7 +96,7 @@ class MainGameScene extends Phaser.Scene {
     this.add.image(0, 0, 'bg-gradient').setOrigin(0, 0);
 
     this.add
-      .text(400, 30, 'GOVERMENT of \'53', {
+      .text(400, 30, 'GOVERMENT of \'54', {
         fontSize: titleSize,
         fontFamily: FONT_FAMILIES.LSBold,
         color: COLOR_HEX.TEXT,
